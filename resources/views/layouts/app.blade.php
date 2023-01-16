@@ -55,8 +55,8 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Register</a>
-                                    <a class="dropdown-item" href="#">List</a>
+                                    <a class="dropdown-item" href="{{ route('student.list') }}">List</a>
+                                    <a class="dropdown-item" href="{{ route('student.register') }}">Register</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -87,4 +87,7 @@
         </main>
     </div>
 </body>
+
+@yield('script')
+
 </html>

@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\UserAuthController;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +24,5 @@ use App\Http\Controllers\StudentController;
 Route::post('/register',  [UserAuthController::class, 'register']);
 Route::get('/login',  [UserAuthController::class, 'login']);
 
-Route::apiResource('/student', StudentController::class)->middleware('auth:api');
-Route::post('/student/search', [StudentController::class, 'getStudent'])->middleware('auth:api');
+Route::apiResource('/student', StudentApiController::class)->middleware('auth:api');
+Route::post('/student/search', [StudentApiController::class, 'getStudent'])->middleware('auth:api');
