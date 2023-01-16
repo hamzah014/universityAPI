@@ -14,6 +14,8 @@ class StudentResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+        return collect(parent::toArray($request))->only(['name', 'address']);
     }
+
 }

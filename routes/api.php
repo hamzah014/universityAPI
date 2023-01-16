@@ -25,3 +25,4 @@ Route::post('/register',  [UserAuthController::class, 'register']);
 Route::get('/login',  [UserAuthController::class, 'login']);
 
 Route::apiResource('/student', StudentController::class)->middleware('auth:api');
+Route::post('/student/search', [StudentController::class, 'getStudent'])->middleware('auth:api');

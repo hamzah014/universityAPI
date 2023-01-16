@@ -17,10 +17,10 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::all();
-        return response([ 'student' => 
-        StudentResource::collection($students), 
-        'message' => 'Successful'], 200);
+        $students = Student::select('name','address')->get();
+
+        return response([ 'student' => StudentResource::collection($students), 
+                          'message' => 'Success'], 200);
     }
 
     /**
@@ -47,9 +47,8 @@ class StudentController extends Controller
 
         $student = Student::create($data);
 
-        return response([ 'student' => new 
-        StudentResource($student), 
-        'message' => 'Success'], 200);
+        return response([ 'student' => new StudentResource($student), 
+                          'message' => 'Success'], 200);
     }
 
     /**
@@ -61,8 +60,8 @@ class StudentController extends Controller
     public function show(Student $student)
     {
         //
-        return response([ 'student' => new 
-        StudentResource($student), 'message' => 'Success'], 200);
+        return response([ 'student' => new StudentResource($student), 
+                          'message' => 'Success'], 200);
 
     }
 
@@ -75,12 +74,11 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
-
+        
         $student->update($request->all());
 
-        return response([ 'student' => new 
-        StudentResource($student), 'message' => 'Success'], 200);
+        return response([ 'student' => new StudentResource($student), 
+                          'message' => 'Success'], 200);
     
     }
 
@@ -95,6 +93,30 @@ class StudentController extends Controller
         //
         $student->delete();
 
-        return response(['message' => 'Student deleted']);
+        return response(['message' => 'Success'], 200);
     }
+
+    public function getStudent(Request $request){
+
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
+            'search' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response(['error' => $validator->errors(), 
+            'Validation Error']);
+        }
+
+        $searchval = $data['search'];
+
+        $student = Student::where('name','LIKE',"%$searchval%")->orWhere('email','LIKE',"%$searchval%")->get();
+        //$student = Student::whereLike(['name', 'email'],$searchval)->get();
+
+        return response([ 'student' => StudentResource::collection($student), 
+                          'message' => 'Success'], 200);
+
+    }
+
 }
